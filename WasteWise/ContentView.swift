@@ -12,25 +12,25 @@ struct ContentView: View {
         
         NavigationView{
             
-//MARK: Page 1 BG
+            //MARK: Page 1 BG
             ZStack{
                 Image(uiImage: UIImage(named: "Page1")!)
                     .edgesIgnoringSafeArea(.all)
-            
-//MARK: Navigation Button
-            NavigationLink(destination: CameraView()
-                .navigationBarBackButtonHidden(true))
-                        {
-            Text("Get Started")
-                                }
-            .font(.system(size: 28, weight: .semibold))
-            .foregroundColor(.white)
-            .frame(maxWidth: 270, maxHeight: 65)
-            .background(Color("DarkGreen"))
-            .cornerRadius(20)
-            .padding()
-            .padding(.top, 610)
-        }
+                
+                //MARK: Navigation Button
+                NavigationLink(destination: CameraView()
+                    .navigationBarBackButtonHidden(true))
+                {
+                    Text("Get Started")
+                }
+                .font(.system(size: 28, weight: .semibold))
+                .foregroundColor(.white)
+                .frame(maxWidth: 270, maxHeight: 65)
+                .background(Color("DarkGreen"))
+                .cornerRadius(20)
+                .padding()
+                .padding(.top, 610)
+            }
         }
     }
 }

@@ -10,33 +10,11 @@ import AVFoundation
 import Vision
 import CoreML
 
-//struct CameraPreview: UIViewRepresentable{
-//    @ObservedObject var camera: CameraModel
-//    func makeUIView(context: Context) -> UIView {
-//        let view = UIView(frame: UIScreen.main.bounds)
-//        DispatchQueue.main.async{
-//            camera.preview = AVCaptureVideoPreviewLayer(session: camera.session)
-//            camera.preview.frame = view.frame
-//
-//            camera.preview.videoGravity = .resizeAspectFill
-//            view.layer.addSublayer(camera.preview)
-//            camera.session.startRunning()
-//        }
-//        return view
-//    }
-//
-//    func updateUIView(_ uiView: UIView, context: Context) {
-//
-//    }
-//}
-
 struct CameraView: View{
     @StateObject private var cameraController = CameraController()
-//    @StateObject var camera = CameraModel()
     @State private var classificationResult: String = ""
-
+    
     @State private var capturedImage: UIImage?
-//    @State var resultText: String = ""
     
     let wasteClassifier: VNCoreMLModel = {
         do {
@@ -47,10 +25,11 @@ struct CameraView: View{
             fatalError("Failed to load Core ML model: \(error)")
         }
     }()
-        
+    
     var body: some View{
+        
+        //MARK: BG
         ZStack{
-            //MARK: Page 1 BG
             Image(uiImage: UIImage(named: "AppBG")!)
                 .edgesIgnoringSafeArea(.all)
             
@@ -66,25 +45,10 @@ struct CameraView: View{
                         .frame(width: 310, height: 527)
                         .cornerRadius(5)
                 }
-               
-//                CameraPreview(camera: camera)
-//                    .frame(width: 310, height: 527)
-//                    .cornerRadius(5)
                 
                 Spacer()
+                //MARK: Camera Button
                 HStack {
-                    //                    Button(action: {camera.takePic()}, label: {
-                    //                        ZStack{
-                    //                            Circle()
-                    //                                .strokeBorder(.black, lineWidth: 3)
-                    //                                .frame(width: 62, height: 62)
-                    //                            Circle()
-                    //                                .fill(.black)
-                    //                                .frame(width: 50, height: 50)
-                    //                        }
-                    //                    })
-                    
-                    //MARK: Navigation Button
                     Button{
                         cameraController.capturePhoto(){photo in
                             capturedImage = photo
@@ -104,7 +68,6 @@ struct CameraView: View{
                     }
                 }
                 .padding(.bottom, 60)
-                //                .frame(height: 75)
             }
         }
         .onAppear{
@@ -113,11 +76,9 @@ struct CameraView: View{
         .onDisappear{
             cameraController.stopSession()
         }
-//        .onAppear(perform: {
-//            camera.Check()
-//        })
     }
     
+    //MARK: Classify Image
     func performImageAnalysis(image: UIImage?){
         guard let image = image,
               let ciImage = CIImage(image: image) else {
@@ -142,14 +103,8 @@ struct CameraView: View{
                 }
                 
                 let wasteName = topResult.identifier
-                //                let confidence = topResult.confidence
                 print(topResult.identifier)
                 self.classificationResult = wasteName
-                
-//                let resultString = "\(wasteName)"
-//                DispatchQueue.main.async {
-//                    self.classificationResult = resultString
-//                }
             }
             
             let handler = VNImageRequestHandler(ciImage: ciImage)
@@ -189,7 +144,7 @@ class CameraModel: NSObject, ObservableObject, AVCapturePhotoCaptureDelegate{
             fatalError("Failed to load Core ML model: \(error)")
         }
     }()
-
+    
     func Check(){
         switch AVCaptureDevice.authorizationStatus(for: .video){
         case.authorized:

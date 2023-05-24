@@ -9,129 +9,86 @@ import SwiftUI
 
 struct WastetypeView: View {
     
-//    @Environment(\.presentationMode) var presentation
-//
     @State var result: String
     @State private var showTips = false
     
-//    private var backButton: some View {
-//        @Environment(\.presentationMode) var presentation
-//
-//    //    NavigationLink(destination: CameraView()) {
-//            HStack {
-//                Image(systemName: "chevron.left")
-//                Text("Back")
-//            }.onTapGesture {
-//                presentation.wrappedValue.dismiss()
-//            }
-//    }
     var body: some View {
-//        NavigationView{
-            //MARK: Page 1 BG
+        //MARK: BG
+        ZStack{
+            Image(uiImage: UIImage(named: "AppBG")!)
+                .edgesIgnoringSafeArea(.all)
             
-            ZStack{
-                Image(uiImage: UIImage(named: "AppBG")!)
-                    .edgesIgnoringSafeArea(.all)
+            VStack{
+                Text("Your kind of rubbish:")
+                    .font(.system(size: 28, weight: .semibold))
+                    .padding(.bottom, 50)
                 
-                VStack{
-                    //                    Button{
-                    //                        showTips.toggle()
-                    //                        print("toggle")
-                    //                    } label: {
-                    //                        Image(systemName: "back")
-                    //                    }
-                    Text("Your kind of rubbish:")
-                        .font(.system(size: 28, weight: .semibold))
-                        .padding(.bottom, 50)
+                //MARK: Rubbish Type
+                if result == "Recycle"{
+                    Image("Recycle")
+                        .frame(width: 332, height: 291)
                     
-                    //            Image("Recycle")
-                    //                .frame(width: 332, height: 291)
-                    
-                    if result == "Recycle"{
-                        Image("Recycle")
-                            .frame(width: 332, height: 291)
-                        
-                        //MARK: Navigation Button Recycle
-                        Button{
-                            showTips.toggle()
-                            print("toggle")
-                        } label: {
-                            Text("Tips for managing recyclable waste")
-                                .font(.system(size: 17, weight: .semibold))
-                                .foregroundColor(Color("Font"))
-                                .underline()
-                                .padding(.top, 100)
-                                .frame(width: 336, height: 100)
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                        .sheet(isPresented: $showTips){
-                            RecycleTips()
-                                .padding(.horizontal)
-                                .padding(.top, 32)
-                                .presentationDetents([.medium, .fraction(0.80)])
-                                .presentationDragIndicator(.visible)
-                        }
-                        //                    NavigationLink(destination: TipsView()
-                        //                        .navigationBarBackButtonHidden(true))
-                        //                    {
-                        //
-                        //                        Text("Tips for managing recyclable waste")
-                        //                            .font(.system(size: 17, weight: .semibold))
-                        //                            .foregroundColor(Color("Font"))
-                        //                            .underline()
-                        //                            .padding(.top, 100)
-                        //                    }
-                        
-                    } else if result == "Organic"{
-                        Image("Organic")
-                            .frame(width: 332, height: 291)
-                        
-                        //MARK: Navigation Button Organic
-                        Button{
-                            showTips.toggle()
-                            print("toggle")
-                        } label: {
-                            Text("Tips for managing organic waste")
-                                .font(.system(size: 17, weight: .semibold))
-                                .foregroundColor(Color("Font"))
-                                .underline()
-                                .padding(.top, 100)
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                        .sheet(isPresented: $showTips){
-                            OrganicTips()
-                                .padding(.horizontal)
-                                .padding(.top, 32)
-                                .presentationDetents([.medium, .fraction(0.80)])
-                                .presentationDragIndicator(.visible)
-                        }
-                        
-                        //                else {
-                        //                    Image("Page1")
-                        //                }
-                        //
+                    //MARK: Recycle Tips
+                    Button{
+                        showTips.toggle()
+                        print("toggle")
+                    } label: {
+                        Text("Tips for managing recyclable waste")
+                            .font(.system(size: 17, weight: .semibold))
+                            .foregroundColor(Color("Font"))
+                            .underline()
+                            .padding(.top, 100)
+                            .frame(width: 336, height: 100)
                     }
-                    //MARK: Navigation Button
-                    NavigationLink(destination: CameraView()
-                        .navigationBarBackButtonHidden(true))
-                    {
-                        Text("Classify Other Rubbish")
+                    .buttonStyle(PlainButtonStyle())
+                    .sheet(isPresented: $showTips){
+                        RecycleTips()
+                            .padding(.horizontal)
+                            .padding(.top, 32)
+                            .presentationDetents([.medium, .fraction(0.80)])
+                            .presentationDragIndicator(.visible)
                     }
-                    .font(.system(size: 22, weight: .semibold))
-                    .foregroundColor(.white)
-                    .frame(maxWidth: 270, maxHeight: 65)
-                    .background(Color("DarkGreen"))
-                    .cornerRadius(20)
-                    .padding(.top, 40)
+                } else if result == "Organic"{
+                    Image("Organic")
+                        .frame(width: 332, height: 291)
                     
-                    
-                    
+                    //MARK: Organic Tips
+                    Button{
+                        showTips.toggle()
+                        print("toggle")
+                    } label: {
+                        Text("Tips for managing organic waste")
+                            .font(.system(size: 17, weight: .semibold))
+                            .foregroundColor(Color("Font"))
+                            .underline()
+                            .padding(.top, 100)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .sheet(isPresented: $showTips){
+                        OrganicTips()
+                            .padding(.horizontal)
+                            .padding(.top, 32)
+                            .presentationDetents([.medium, .fraction(0.80)])
+                            .presentationDragIndicator(.visible)
+                    }
                 }
+                //MARK: Navigation Button
+                NavigationLink(destination: CameraView()
+                    .navigationBarBackButtonHidden(true))
+                {
+                    Text("Classify Other Rubbish")
+                }
+                .font(.system(size: 22, weight: .semibold))
+                .foregroundColor(.white)
+                .frame(maxWidth: 270, maxHeight: 65)
+                .background(Color("DarkGreen"))
+                .cornerRadius(20)
+                .padding(.top, 40)
+                
+                
+                
             }
-//            .navigationBarTitle("", displayMode: .inline)
-//            .navigationBarItems(leading: backButton)
-            
-//        }
+        }
     }
 }
 
