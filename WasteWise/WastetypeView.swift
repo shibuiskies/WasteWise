@@ -45,7 +45,7 @@ struct WastetypeView: View {
                         RecycleTips()
                             .padding(.horizontal)
                             .padding(.top, 32)
-                            .presentationDetents([.medium, .fraction(0.80)])
+                            .presentationDetents([.fraction(0.60)])
                             .presentationDragIndicator(.visible)
                     }
                 } else if result == "Organic"{
@@ -68,7 +68,7 @@ struct WastetypeView: View {
                         OrganicTips()
                             .padding(.horizontal)
                             .padding(.top, 32)
-                            .presentationDetents([.medium, .fraction(1.0)])
+                            .presentationDetents([.medium, .fraction(0.80)])
                             .presentationDragIndicator(.visible)
                     }
                 }
