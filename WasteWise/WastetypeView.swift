@@ -68,7 +68,7 @@ struct WastetypeView: View {
                         OrganicTips()
                             .padding(.horizontal)
                             .padding(.top, 32)
-                            .presentationDetents([.medium, .fraction(0.80)])
+                            .presentationDetents([.medium, .fraction(1.0)])
                             .presentationDragIndicator(.visible)
                     }
                 }
